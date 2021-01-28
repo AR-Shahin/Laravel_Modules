@@ -41,5 +41,12 @@ class AxiousImageUploadController extends Controller
         }
     }
     
+    public function delete(Request $request){
+
+        $file = Image::find($request->id);
+        Storage::delete($file->path);
+         $file->delete();
+         return $this->returnResponse('DELETE','',200,'');
+    }
 }
 

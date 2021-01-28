@@ -14,6 +14,7 @@
     <div class="form-group">
         <button class="btn btn-sm btn-block btn-success" id="imgUploadBtn">Upload</button>
     </div>
+    <span id="uploadStatus"></span>
 </div>
 <div class="col-8">
  <div class="card">
@@ -59,7 +60,7 @@ getAllFile();
     $('body').on('click','.download', function(e) {
         e.preventDefault();
         let path = $(this).attr('data-path');
-        let data = {path:path};    
+        let data = {path:path};
 
         axios
             .get("{{route('image.download')}}", {params : data})
@@ -69,11 +70,27 @@ getAllFile();
             .catch(err =>{
 
             })
-   
-   
-      
-
     });
+
+    //delete 
+    $('body').on('click','.delete',function (e) {
+        e.preventDefault()
+        let id = $(this).attr('data-id')
+        let data = {id:id}
+        axios
+            .delete("{{route('image.delete')}}", {params : data})
+            .then(res => {
+                if(res.data == 'DELETE'){
+                    alert('Data Deleted!');
+                    getAllFile();
+                }
+            })
+            .catch(err =>{
+
+            })
+        
+
+    })
     //store
     $('#imgUploadBtn').click((e)=>{
     e.preventDefault();
@@ -84,18 +101,25 @@ getAllFile();
        let ext = fileName.split('.').pop()
        let fileData = new FormData()
        fileData.append('file',file)
-        let config = {headers : {'content-type' : 'multipart/form-data'}}
-     /*  axios({
-           method : 'post',
-           url : "{{ route('image.store') }}",
-           data : fileData,
-           headers : config
-       })*/
+        let config = {
+            headers : {'content-type' : 'multipart/form-data'},
+
+        onUploadProgress : progressEven => {
+            let size = (progressEven.total /(1024*1024)).toFixed(2)
+            let loaded = (progressEven.loaded /(1024*1024)).toFixed(2)
+            let left = size - loaded
+            $('#uploadStatus').html('<b>Total : </b>' + size +'MB <b>Loaded : </b>' + loaded+ 'MB <b>left : </b>'+left.toFixed(2)+' MB');
+        }
+        }
        axios.post("{{ route('image.store') }}",fileData,config)
        .then( response =>{
         if(response.data.code == 201){
             document.getElementById('imgUploadBtn').innerText = 'Success';
             getAllFile();
+            setTimeout(() =>{
+                $('#uploadStatus').html('');
+            },1000)
+           
         }
        })
        .catch(error =>{
@@ -104,7 +128,7 @@ getAllFile();
     }else{
         alert('Filed must nit be empty!')
     }
-  
+
 
     });
     </script>
