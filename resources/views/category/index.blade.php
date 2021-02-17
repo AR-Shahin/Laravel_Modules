@@ -113,5 +113,5 @@
         </div>
     </nav>
     <hr>
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam assumenda beatae cupiditate, dolorem doloremque doloribus ducimus esse hic, illum ipsa ipsam magnam perferendis possimus provident, tempore totam veniam? Cum, ducimus! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad adipisci aliquam aliquid cupiditate debitis distinctio eius eos eum eveniet, expedita, fugit hic itaque labore modi molestiae officiis possimus quod sint sit vitae. Dolores hic inventore iure laborum libero modi nisi quae quidem repudiandae. Autem doloribus exercitationem impedit! Aliquam, itaque mollitia.
+<section style="margin-top: 450px"></section>
 @stop
