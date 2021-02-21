@@ -52,7 +52,7 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <textarea name="result_world" id="result_world" cols="30" rows="10" class="form-control" style="font-size: 25px"></textarea>
+                    <textarea name="result_world" id="result_world" cols="30" rows="9" class="form-control" style="font-size: 25px"></textarea>
                 </div>
             </div>
         </div>
@@ -61,8 +61,11 @@
 
 @push('script')
 <script>
-    $('body').on('keyup blur click keydown keypress','#source_word',function () {
+    $('body').on('keyup blur','#source_word',function () {
         var source_word = $(this).val();
+        if(source_word == ''){
+            $('#result_world').val('');
+        }
         var source_language = $('#source_language').val();
         var result_language = $('#result_language').val();
         var data = {word : source_word,source_lan : source_language,res_lan:result_language};
@@ -85,6 +88,6 @@
         }else{
             alert('Select Lan');
         }
-    })
+    });
 </script>
 @endpush

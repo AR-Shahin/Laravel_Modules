@@ -12,9 +12,11 @@ use function view;
 class CategoryController extends Controller
 {
     public function index(){
+       // return Category::where('parent_id',0)->with('subcategories')->get();
         return view('category.index',[
-            'parentCategories' => Category::where('parent_id',0)->get(),
+            'parentCategories' => Category::get(),
             'categories' => Category::with('subcategories')->get(),
+            'vcats' => Category::where('parent_id',0)->with('subcategories')->get(),
         ]);
     }
     public function store(Request $request){
